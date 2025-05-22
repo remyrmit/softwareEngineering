@@ -14,15 +14,18 @@ public class DataValidator {
         System.out.println("Checking ID: " + personID);
 
         if (personID == null || personID.length() != 10) {
+            System.out.println("Incorrect ID length.");
             return false;
         }
 
         char first = personID.charAt(0);
         char second = personID.charAt(1);
         if (!Character.isDigit(first) || !Character.isDigit(second)) {
+            System.out.println("First 2 characters must be a digit..");
             return false;
         }
         if (first < '2' || first > '9' || second < '2' || second > '9') {
+            System.out.println("First 2 characters must be between 2 and 9.");
             return false;
         }
 
@@ -42,6 +45,7 @@ public class DataValidator {
         char last1 = personID.charAt(8);
         char last2 = personID.charAt(9);
         if (!Character.isUpperCase(last1) || !Character.isUpperCase(last2)) {
+            System.out.println("Last 2 characters must be uppercase.");
             return false;
         }
 
@@ -56,6 +60,7 @@ public class DataValidator {
 
         String[] parts = address.split("\\|");
         if (parts.length != 5) {
+            System.out.println("Incorrect address format.");
             return false;
         }
 
@@ -70,6 +75,7 @@ public class DataValidator {
         }
 
         if (!state.equals("Victoria")) {
+            System.out.println("Incorrect state.");
             return false;
         }
 
@@ -79,11 +85,13 @@ public class DataValidator {
     // validating birthday: format, length, valid info
     public static boolean checkBirthdate(String birthdate) {
         if (birthdate == null || birthdate.isEmpty()) {
+            System.out.println("Incorrect birthdate.");
             return false;
         }
 
         String[] parts = birthdate.split("-");
         if (parts.length != 3) {
+            System.out.println("Incorrect format.");
             return false;
         }
 
@@ -92,6 +100,7 @@ public class DataValidator {
         String yearStr = parts[2];
 
         if (!dayStr.matches("\\d{2}") || !monthStr.matches("\\d{2}") || !yearStr.matches("\\d{4}")) {
+            System.out.println("Incorrect format.");
             return false;
         }
 
@@ -100,10 +109,12 @@ public class DataValidator {
         int year = Integer.parseInt(yearStr);
 
         if (month < 1 || month > 12 || day < 1 || day > 31) {
+            System.out.println("Incorrect month and/or day .");
             return false;
         }
 
         if (year < 1920 || year > 2025) {
+            System.out.println("Incorrect year.");
             return false;
         }
 
@@ -124,7 +135,11 @@ public class DataValidator {
 
     // validating first name: only characters
     public static boolean checkFirstName(String firstName) {
-        return firstName != null && firstName.matches("[A-Z][a-zA-Z]*");
+        if (firstName == null || firstName.isEmpty() || !firstName.matches("[A-Z][a-zA-Z]*")) {
+            System.out.println("Incorrect first name.");
+            return false;
+        }
+        return true;
     }
 
     // validating last name: only characters
