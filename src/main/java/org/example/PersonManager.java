@@ -178,8 +178,6 @@ public class PersonManager {
         return false;
     }
 
-
-
     private static final String DEMERIT_FILE = "demerits.txt";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
