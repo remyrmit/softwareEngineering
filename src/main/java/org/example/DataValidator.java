@@ -91,7 +91,7 @@ public class DataValidator {
 
         String[] parts = birthdate.split("-");
         if (parts.length != 3) {
-            System.out.println("Incorrect format.");
+            System.out.println("Incorrect date format.");
             return false;
         }
 
@@ -100,7 +100,7 @@ public class DataValidator {
         String yearStr = parts[2];
 
         if (!dayStr.matches("\\d{2}") || !monthStr.matches("\\d{2}") || !yearStr.matches("\\d{4}")) {
-            System.out.println("Incorrect format.");
+            System.out.println("Incorrect date format.");
             return false;
         }
 
@@ -109,7 +109,7 @@ public class DataValidator {
         int year = Integer.parseInt(yearStr);
 
         if (month < 1 || month > 12 || day < 1 || day > 31) {
-            System.out.println("Incorrect month and/or day .");
+            System.out.println("Incorrect day/month/year");
             return false;
         }
 

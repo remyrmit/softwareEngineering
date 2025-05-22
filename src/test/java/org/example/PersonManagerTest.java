@@ -7,23 +7,96 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonManagerTest {
 
+
     @Test
-    public void testAddPerson_ValidPerson() {
+    public void testAddPerson_InvalidIDFirstDigitIsZero() {
+
         PersonManager manager = new PersonManager("people.txt");
 
-        Person validPerson = new Person(
-                "00s_d%&fAB",                           // Valid ID
-                "UNIT",                                // Valid first name
-                "TEST",                                // Valid last name
-                "00|Highland Street|Melbourne|Victoria|Australia", // Valid address
-                "15-11-1990"                             // Valid birthdate
+        Person invalidID = new Person(
+                "02%^cdeXYZ",
+                "UNIT",
+                "TEST",
+                "80|Swanston Street|Melbourne|Victoria|Australia",
+                "02-04-1999"
         );
 
-        boolean result = manager.addPerson(validPerson);
+        boolean result = manager.addPerson(invalidID);
 
-     //   assertTrue(result, "Person with valid details should be added successfully.");
         assertFalse(result, "Person with invalid ID should not be added.");
-
     }
+
+    @Test
+    public void testAddPerson_InvalidIDNoSpecialCharacter() {
+
+        PersonManager manager = new PersonManager("people.txt");
+
+        Person invalidID = new Person(
+                "22abcdeXYZ",
+                "UNIT",
+                "TEST",
+                "80|Swanston Street|Melbourne|Victoria|Australia",
+                "02-04-1999"
+        );
+
+        boolean result = manager.addPerson(invalidID);
+
+        assertFalse(result, "Person with invalid ID should not be added.");
+    }
+
+    @Test
+    public void testAddPerson_BirthdateTooShort(){
+
+        PersonManager manager = new PersonManager("people.txt");
+
+        Person invalidID = new Person(
+                "22ab$%eXYZ",
+                "UNIT",
+                "TEST",
+                "80|Swanston Street|Melbourne|Victoria|Australia",
+                "2-4-99"
+        );
+
+        boolean result = manager.addPerson(invalidID);
+
+        assertFalse(result, "Person with invalid birthdate format should not be added.");
+    }
+
+    @Test
+    public void testAddPerson_BirthdateWrongFormat(){
+
+        PersonManager manager = new PersonManager("people.txt");
+
+        Person invalidID = new Person(
+                "22ab$%eXYZ",
+                "UNIT",
+                "TEST",
+                "80|Swanston Street|Melbourne|Victoria|Australia",
+                "02/04/1999"
+        );
+
+        boolean result = manager.addPerson(invalidID);
+
+        assertFalse(result, "Person with invalid birthdate format should not be added.");
+    }
+
+    @Test
+    public void testAddPerson_BirthdateNotExistent(){
+
+        PersonManager manager = new PersonManager("people.txt");
+
+        Person invalidID = new Person(
+                "22ab$%eXYZ",
+                "UNIT",
+                "TEST",
+                "80|Swanston Street|Melbourne|Victoria|Australia",
+                "00-13-1000"
+        );
+
+        boolean result = manager.addPerson(invalidID);
+
+        assertFalse(result, "Person with invalid birthdate format should not be added.");
+    }
+
 }
 
