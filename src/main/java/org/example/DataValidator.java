@@ -74,9 +74,7 @@ public class DataValidator {
             return false;
         }
 
-        /* Eileen: Check the validation about String 'Victoria' states, should consider upper case and lower case when user input.
-        Maybe consider here is easier, cuz Main.java would enter a lot details at the same time. or just justify that user will always enter the correct info.
-        */
+
         if (!state.equals("Victoria")) {
             System.out.println("Incorrect state.");
             return false;
