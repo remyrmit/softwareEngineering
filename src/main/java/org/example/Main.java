@@ -30,7 +30,7 @@ public class Main {
         PersonManager pm = new PersonManager("people.txt");
 
         while (true) {
-            System.out.println("\n--- Person Management System ---");
+            System.out.println("\n--- Person Management ---");
             System.out.println("1. Add person");
             System.out.println("2. Update Personal Details");
             System.out.println("3. Add Demerit Points");

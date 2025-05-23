@@ -49,7 +49,7 @@ public class PersonManagerTest {
 
         PersonManager manager = new PersonManager("people.txt");
 
-        Person invalidID = new Person(
+        Person invalidBirthdate = new Person(
                 "22ab$%eXYZ",
                 "UNIT",
                 "TEST",
@@ -57,7 +57,7 @@ public class PersonManagerTest {
                 "2-4-99"
         );
 
-        boolean result = manager.addPerson(invalidID);
+        boolean result = manager.addPerson(invalidBirthdate);
 
         assertFalse(result, "Person with invalid birthdate format should not be added.");
     }
@@ -67,7 +67,7 @@ public class PersonManagerTest {
 
         PersonManager manager = new PersonManager("people.txt");
 
-        Person invalidID = new Person(
+        Person invalidBirthdate = new Person(
                 "22ab$%eXYZ",
                 "UNIT",
                 "TEST",
@@ -75,7 +75,7 @@ public class PersonManagerTest {
                 "02/04/1999"
         );
 
-        boolean result = manager.addPerson(invalidID);
+        boolean result = manager.addPerson(invalidBirthdate);
 
         assertFalse(result, "Person with invalid birthdate format should not be added.");
     }
@@ -85,7 +85,7 @@ public class PersonManagerTest {
 
         PersonManager manager = new PersonManager("people.txt");
 
-        Person invalidID = new Person(
+        Person invalidBirthdate = new Person(
                 "22ab$%eXYZ",
                 "UNIT",
                 "TEST",
@@ -93,7 +93,7 @@ public class PersonManagerTest {
                 "00-13-1000"
         );
 
-        boolean result = manager.addPerson(invalidID);
+        boolean result = manager.addPerson(invalidBirthdate);
 
         assertFalse(result, "Person with invalid birthdate format should not be added.");
     }
