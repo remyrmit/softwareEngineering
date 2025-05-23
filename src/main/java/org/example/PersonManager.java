@@ -161,7 +161,7 @@ public class PersonManager {
                     return false;
                 }
 
-                // if al data is valid, then the details are updated
+                // if all data is valid, then the details are updated
                 person.setPersonID(newID);
                 person.setFirstName(newFirstName);
                 person.setLastName(newLastName);
