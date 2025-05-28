@@ -189,17 +189,23 @@ public class PersonManager {
         Person person = findPersonById(id);
         if (person == null) return "Failed";
 
-        // vlidate date
+        // validate date
         LocalDate offenseDate;
         try {
             offenseDate = LocalDate.parse(dateOfOffense, FORMATTER);
-            if (offenseDate.isAfter(LocalDate.now())) return "Failed"; // No future dates
+            if (offenseDate.isAfter(LocalDate.now())){
+                System.out.println("Offense date is after current date.");
+                return "Failed"; // No future dates
+            }
         } catch (DateTimeParseException e) {
             return "Failed";
         }
 
         // validate points
-        if (points < 1 || points > 6) return "Failed";
+        if (points < 1 || points > 6) {
+            System.out.println("Points must be between 1 and 6.");
+            return "Failed";
+        }
 
         // calculate demerits within 2 years
         int totalPointsIn2Years = getDemeritPointsInTwoYears(id, offenseDate) + points;
@@ -211,6 +217,7 @@ public class PersonManager {
         boolean suspend = (age < 21 && totalPointsIn2Years > 6) || (age >= 21 && totalPointsIn2Years > 12);
 
         if (suspend) person.setSuspended(true);
+        System.out.println("License have been suspended.");
 
         // appending to file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEMERIT_FILE, true))) {
@@ -227,6 +234,7 @@ public class PersonManager {
             return "Failed";
         }
 
+        System.out.println("Demerit points have been successfully added.");
         return "Success";
     }
 

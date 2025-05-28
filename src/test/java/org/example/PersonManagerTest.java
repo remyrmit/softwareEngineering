@@ -160,8 +160,8 @@ public class PersonManagerTest {
 
         PersonManager manager = new PersonManager("people.txt");
 
-        boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tommy", "Hanks",
-                "80|Swanston Street|Melbourne|Victoria|Australia", "11-11-2000");
+        boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Thomas", "Hanks",
+                "80|Swanston Street|Melbourne|Victoria|Australia", "11-11-2011");
 
         assertTrue(result);
     }
@@ -190,6 +190,63 @@ public class PersonManagerTest {
     }
 
 
+    @Test
+    public void testAddDemeritPoints_InvalidPoints() throws IOException {
+        PersonManager manager = new PersonManager("people.txt");
 
+        String result = manager.addDemeritPoints("65ab$%eXYZ", "01-04-2024", 0);
+
+        assertEquals("Failed", result);
+
+        String result2 = manager.addDemeritPoints("65ab$%eXYZ", "01-04-2024", 7);
+
+        assertEquals("Failed", result2);
+    }
+
+
+    @Test
+    public void testAddDemeritPoints_FutureDate() throws IOException {
+
+        PersonManager manager = new PersonManager("people.txt");
+
+        String result = manager.addDemeritPoints("56rm$%eXYZ", "01-01-2030", 4);
+
+        assertEquals("Failed", result);
+    }
+
+    @Test
+    public void testAddDemeritPoints_ValidUnder21NoSuspension() throws IOException {
+
+        PersonManager manager = new PersonManager("people.txt");
+
+        // 20-year-old, only 3 points, should not be suspended
+        String result = manager.addDemeritPoints("56rm$%eXYZ", "01-04-2024", 4);
+
+        assertEquals("Success", result);
+    }
+
+    @Test
+    public void testAddDemeritPoints_TriggerSuspensionUnder21() throws IOException {
+
+        PersonManager manager = new PersonManager("people.txt");
+
+        // we have already added 4 point in the test above -- now the total will be 7
+        String result = manager.addDemeritPoints("56rm$%eXYZ", "01-05-2025", 3);
+
+        assertEquals("Success", result);
+
+    }
+
+    @Test
+    public void testAddDemeritPoints_TriggerSuspensionOver21() throws IOException {
+
+        PersonManager manager = new PersonManager("people.txt");
+
+        //previously added points
+        String result = manager.addDemeritPoints("65ab$%eXYZ", "01-05-2025", 1);
+
+        assertEquals("Success", result);
+
+    }
 }
 
