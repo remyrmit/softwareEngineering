@@ -1,7 +1,5 @@
 package org.example;
 
-import org.example.Person;
-import org.example.PersonManager;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
