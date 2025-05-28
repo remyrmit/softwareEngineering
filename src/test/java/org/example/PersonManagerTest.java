@@ -128,7 +128,6 @@ public class PersonManagerTest {
         assertFalse(result);
     }
 
-
     @Test
     public void testUpdatePerson_Under18AddressChange() throws IOException {
 
@@ -200,7 +199,6 @@ public class PersonManagerTest {
 
         assertEquals("Failed", result2);
     }
-
 
     @Test
     public void testAddDemeritPoints_FutureDate() throws IOException {
