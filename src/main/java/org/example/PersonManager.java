@@ -138,17 +138,20 @@ public class PersonManager {
 
                 // If birthday changed, no other fields can be changed
                 if (birthdayChanged && (idChanged || nameChanged || addressChanged)) {
+                    System.out.println("You can only update your birthdate.");
                     return false;
                 }
 
                 // If person is under 18, address can't be changed
                 if (DataValidator.isUnder18(currentBirthdate) && addressChanged) {
+                    System.out.println("\nAddress cannot be changed due to being under 18.");
                     return false;
                 }
 
                 // If ID starts with even number, ID can't be changed
                 char firstChar = currentID.charAt(0);
                 if (Character.isDigit(firstChar) && (firstChar - '0') % 2 == 0 && idChanged) {
+                    System.out.println("You cannot update your ID.");
                     return false;
                 }
 
@@ -167,6 +170,7 @@ public class PersonManager {
                 person.setLastName(newLastName);
                 person.setAddress(newAddress);
                 person.setBirthdate(newBirthdate);
+                System.out.println("Details have been successfully updated!");
 
                 // saving the updates to a file
                 FileHandler.overwriteFileWithAllPeople(personList, filename);
