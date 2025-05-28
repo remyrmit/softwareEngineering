@@ -138,7 +138,7 @@ public class Main {
 
         String result = pm.addDemeritPoints(id, date, points);
         if (result.equals("Success")) {
-            System.out.println("Demerit points added successfully.");
+           return;
         } else {
             System.out.println("Failed to add demerit points. Check the inputs.");
         }

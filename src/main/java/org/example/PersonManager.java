@@ -216,8 +216,11 @@ public class PersonManager {
 
         boolean suspend = (age < 21 && totalPointsIn2Years > 6) || (age >= 21 && totalPointsIn2Years > 12);
 
-        if (suspend) person.setSuspended(true);
-        System.out.println("License have been suspended.");
+        if (suspend) {
+            person.setSuspended(true);
+            System.out.println("License suspended.");
+        }
+
 
         // appending to file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEMERIT_FILE, true))) {
