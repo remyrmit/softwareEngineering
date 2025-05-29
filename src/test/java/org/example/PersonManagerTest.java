@@ -170,7 +170,7 @@ public class PersonManagerTest {
 
 
     /*
-     Test Case: Minor Protection - Address Change Restriction | Verify the function with an address change when a person is under 18
+     Test Case: Protection Validation - Address Change Restriction | Verify the function with an address change when a person is under 18
      - Verifies that persons under 18 cannot change their address.
      - This implements child protection policies by preventing minors from 
      - updating their residential information without proper authorization.
@@ -190,7 +190,7 @@ public class PersonManagerTest {
 
 
     /*
-     Test Case: Minor Protection - Name Changes Allowed | Verify the function with any change except for the address when under 18
+     Test Case: Protection Validation - Name Changes Allowed | Verify the function with any change except for the address when under 18
      - Confirms that minors can update their name while keeping the same address.
      - This allows for legitimate name corrections while maintaining address restrictions.
      - Expected: updatePersonalDetails() should return true for name-only changes by minors
@@ -202,39 +202,60 @@ public class PersonManagerTest {
 
         // Update name only, keep same address for person under 18
         boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tommy", "Hanks",
-                "80|Swanston Street|Melbourne|Victoria|Australia", "11-11-2011");
+                "80|Swanston Street|Melbourne|Victoria|Australia", "11-11-2011"); // Same address
 
         assertTrue(result);
     }
 
+    /*
+     Test Case: Updates Validation - Birthdate Correction Allowed | Verify the function with only the birthdate field being changed
+     - Tests that minors can have their birthdate information corrected.
+     - This accommodates legitimate data corrections while maintaining other restrictions.
+     - Expected: updatePersonalDetails() should return true for birthdate updates by minors
+     */
     @Test
     public void testUpdatePerson_Under18BirthdayUpdate() throws IOException {
 
         PersonManager manager = new PersonManager("people.txt");
 
+        // Update birthdate for person under 18
         boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Thomas", "Hanks",
-                "80|Swanston Street|Melbourne|Victoria|Australia", "11-11-2011");
+                "80|Swanston Street|Melbourne|Victoria|Australia", "30-05-2011"); // Different birthdate
 
         assertTrue(result);
     }
 
-
+    /*
+     Test Case: ID Change Restriction - Even Number Rule | Verify the function with changing an ID that starts with an even number
+     - Validates that persons with IDs starting with even numbers cannot change their ID.
+     - This business rule prevents ID modification for certain user categories,
+     - possibly related to account security or administrative privileges.
+     - Expected: updatePersonalDetails() should return false when attempting ID change for accounts starting with even numbers
+     */
     @Test
     public void testUpdatePerson_IDCannotChangeIfStartsWithEvenNumber() throws IOException {
 
         PersonManager manager = new PersonManager("people.txt");
 
+        // Attempt ID change for person with ID starting with even number 2
         boolean result = manager.updatePersonalDetails("29ab$%eXYZ", "11a%%deXYZ", "UNIT", "TEST",
                 "80|Swanston Street|Melbourne|Victoria|Australia", "02-04-1999");
 
         assertFalse(result);
     }
 
+    /*
+     Test Case: ID Change Permission - Odd Number Rule
+     - Confirms that persons with IDs starting with odd numbers can modify their ID.
+     - This complementary rule to the even number restriction allows certain users to update their identification codes when needed.
+     - Expected: updatePersonalDetails() should return true for ID changes when original ID starts with odd numbers
+     */
     @Test
     public void testUpdatePerson_IDChangeWhenStartsWithOdd() throws IOException {
 
         PersonManager manager = new PersonManager("people.txt");
 
+        // Allow ID change for person with ID starting with odd number 5
         boolean result = manager.updatePersonalDetails("56ab$%eXYZ", "56rm$%eXYZ", "UNIT", "TEST",
                 "55|Flinders ln|Melbourne|Victoria|Australia", "02-04-2015");
 
