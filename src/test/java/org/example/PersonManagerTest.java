@@ -182,7 +182,7 @@ public class PersonManagerTest {
         PersonManager manager = new PersonManager("people.txt");
         
         // Attempt to change address for person born in 2011 (under 18)
-        boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tom", "Hanks",
+        boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tommy", "Hanks",
                 "85|Flinders Ln|Melbourne|Victoria|Australia", "11-11-2011"); // Different address
 
         assertFalse(result);
@@ -263,40 +263,68 @@ public class PersonManagerTest {
     }
 
 
+    /*
+     Test Case: Demerit Points Validation - Point Range Limits | Verify the function with demerit points out of range
+     - Ensures that demerit points must be within valid range (1-6 points).
+     - Invalid values (0 or 7+) are rejected to maintain system integrity and prevent manipulation of the scoring system.
+     - Expected: addDemeritPoints() should return "Failed" for out of range values
+     */
     @Test
     public void testAddDemeritPoints_InvalidPoints() throws IOException {
         PersonManager manager = new PersonManager("people.txt");
 
+        // Test lower boundary (0 points - invalid)
         String result = manager.addDemeritPoints("65ab$%eXYZ", "01-04-2024", 0);
 
         assertEquals("Failed", result);
 
+        // Test upper boundary (7 points - invalid)
         String result2 = manager.addDemeritPoints("65ab$%eXYZ", "01-04-2024", 7);
 
         assertEquals("Failed", result2);
     }
 
+    /*
+     Test Case: Demerit Points Validation - Date Restrictions | Verify the function with a future date of an offense
+     - Verifies that demerit points cannot be added for future dates.
+     - This prevents fraudulent backdating and ensures temporal data integrity.
+     - Expected: addDemeritPoints() should return "Failed" for future dates
+     */
     @Test
     public void testAddDemeritPoints_FutureDate() throws IOException {
 
         PersonManager manager = new PersonManager("people.txt");
 
+        // Attempt to add points for future date 2030
         String result = manager.addDemeritPoints("56rm$%eXYZ", "01-01-2030", 4);
 
         assertEquals("Failed", result);
     }
 
+    /*
+     Test Case: Demerit Points - Young Driver Success Case | Verify the function with a person under 21 having less than 6 demerit points
+     - Tests successful addition of demerit points for drivers under 21.
+     - Verifies that valid point additions (within range, current date) are processed correctly without triggering suspension for low point totals.
+     - Expected: addDemeritPoints() should return "Success" for valid adding points transaction
+     */
     @Test
     public void testAddDemeritPoints_ValidUnder21NoSuspension() throws IOException {
 
         PersonManager manager = new PersonManager("people.txt");
 
-        // 20-year-old, only 3 points, should not be suspended
+        // 20-year-old, only 4 points, should not be suspended
         String result = manager.addDemeritPoints("56rm$%eXYZ", "01-04-2024", 4);
 
         assertEquals("Success", result);
     }
 
+    /*
+     Test Case: Demerit Points - Young Driver Suspension Trigger | 
+     - Tests the cumulative effect of demerit points for drivers under 21.
+     - After previous test added 4 points, this adds 3 more (total: 7 points).
+     - Verifies that young drivers face suspension at more than 7+ points 
+     - Expected: addDemeritPoints() should return "Success" but trigger suspension logic
+     */
     @Test
     public void testAddDemeritPoints_TriggerSuspensionUnder21() throws IOException {
 
@@ -309,6 +337,14 @@ public class PersonManagerTest {
 
     }
 
+
+    /*
+     Test Case: Demerit Points - Adult Driver Suspension Rules
+     - Tests demerit point addition for drivers over 21 years old.
+     - Adult drivers have different suspension condition compared to young drivers.
+     - This test adds points to an adult to verify the different rule application.
+     - Expected: addDemeritPoints() should return "Success" with adult-specific rules applied
+     */
     @Test
     public void testAddDemeritPoints_TriggerSuspensionOver21() throws IOException {
 
