@@ -168,24 +168,39 @@ public class PersonManagerTest {
         assertFalse(result);
     }
 
+
+    /*
+     Test Case: Minor Protection - Address Change Restriction | Verify the function with an address change when a person is under 18
+     - Verifies that persons under 18 cannot change their address.
+     - This implements child protection policies by preventing minors from 
+     - updating their residential information without proper authorization.
+     - Expected: updatePersonalDetails() should return false when minors attempt address changes
+     */
     @Test
     public void testUpdatePerson_Under18AddressChange() throws IOException {
 
         PersonManager manager = new PersonManager("people.txt");
-
-        //Person person = new Person("")
-
+        
+        // Attempt to change address for person born in 2011 (under 18)
         boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tom", "Hanks",
-                "85|Flinders Ln|Melbourne|Victoria|Australia", "11-11-2011");
+                "85|Flinders Ln|Melbourne|Victoria|Australia", "11-11-2011"); // Different address
 
         assertFalse(result);
     }
 
+
+    /*
+     Test Case: Minor Protection - Name Changes Allowed | Verify the function with any change except for the address when under 18
+     - Confirms that minors can update their name while keeping the same address.
+     - This allows for legitimate name corrections while maintaining address restrictions.
+     - Expected: updatePersonalDetails() should return true for name-only changes by minors
+     */
     @Test
     public void testUpdatePerson_Under18NoAddressChange() throws IOException {
 
         PersonManager manager = new PersonManager("people.txt");
 
+        // Update name only, keep same address for person under 18
         boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tommy", "Hanks",
                 "80|Swanston Street|Melbourne|Victoria|Australia", "11-11-2011");
 
