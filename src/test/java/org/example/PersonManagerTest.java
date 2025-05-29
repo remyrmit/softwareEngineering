@@ -220,7 +220,7 @@ public class PersonManagerTest {
 
         // Update birthdate for person under 18
         boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Thomas", "Hanks",
-                "80|Swanston Street|Melbourne|Victoria|Australia", "30-05-2011"); // Different birthdate
+                "80|Swanston Street|Melbourne|Victoria|Australia", "11-11-2011"); // Different birthdate
 
         assertTrue(result);
     }
