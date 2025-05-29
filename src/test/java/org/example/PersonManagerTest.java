@@ -8,14 +8,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonManagerTest {
 
-
+    /*
+    Test Case: ID Validation - The first two characters should be numbers between 2 and 9 | Verify the function with an ID where one of the first two digits is 0
+     - Validates that person IDs starting with zero are rejected.
+     - This ensures proper ID format compliance and prevents invalid ID generation.
+     - Expected: addPerson() should return false for IDs starting with '0'
+     */
     @Test
     public void testAddPerson_InvalidIDFirstDigitIsZero() {
 
         PersonManager manager = new PersonManager("people.txt");
 
         Person invalidID = new Person(
-                "02%^cdeXYZ",
+                "02%^cdeXYZ", // Invalid: starts with 0
                 "UNIT",
                 "TEST",
                 "80|Swanston Street|Melbourne|Victoria|Australia",
@@ -27,13 +32,20 @@ public class PersonManagerTest {
         assertFalse(result);
     }
 
+
+    /*
+     Test Case: ID Validation - Must Contain Special Characters | Verify the func-tion with an ID without any special charac-ters 
+     - Verifies that person IDs without special characters are rejected.
+     - This enforces the ID format requirement that includes special characters for security.
+     - Expected: addPerson() should return false for IDs lacking special characters
+     */
     @Test
     public void testAddPerson_InvalidIDNoSpecialCharacter() {
 
         PersonManager manager = new PersonManager("people.txt");
 
         Person invalidID = new Person(
-                "22abcdeXYZ",
+                "22abcdeXYZ", // Invalid: no special characters
                 "UNIT",
                 "TEST",
                 "80|Swanston Street|Melbourne|Victoria|Australia",
@@ -45,27 +57,36 @@ public class PersonManagerTest {
         assertFalse(result);
     }
 
+    /*
+     Test Case: Address Validation - Format and Location Rules | Verify the func-tion with an address in the wrong format/state
+     - Tests that addresses must follow specific formatting rules:
+       1. Must use pipe (|) separators, not commas
+       2. Must specify Victoria as the state (not Tasmania or other states)
+     - This ensures address standardization and location-specific business rules.
+     - Expected: addPerson() should return false for incorrectly formatted addresses
+     */
     @Test
     public void testAddPerson_InvalidIAddressFormat() {
 
         PersonManager manager = new PersonManager("people.txt");
-
+        // Test case 1: Wrong state
         Person invalidAddress1 = new Person(
                 "22a%%deXYZ",
                 "UNIT",
                 "TEST",
-                "80|Swanston Street|Melbourne|Tasmania|Australia",
+                "80|Swanston Street|Melbourne|Tasmania|Australia", // Invalid state
                 "02-04-1999"
         );
 
         boolean result1 = manager.addPerson(invalidAddress1);
         assertFalse(result1);
-
+        
+        // Test case 2: Wrong separator
         Person invalidAddress2 = new Person(
                 "22a%%deXYZ",
                 "UNIT",
                 "TEST",
-                "80, Swanston Street, Melbourne, Victoria, Australia",
+                "80, Swanston Street, Melbourne, Victoria, Australia", // Invalid separator, using commas instead of pipes
                 "02-04-1999"
         );
 
@@ -74,6 +95,13 @@ public class PersonManagerTest {
         assertFalse(result2);
     }
 
+
+    /*
+     Test Case: Birthdate Validation - Minimum Length Requirement | Verify the function with a birthdate that is too short
+     - Ensures that birthdates must be in full format (DD-MM-YYYY).
+     - Abbreviated formats like "2-4-99" are rejected to maintain data consistency.
+     - Expected: addPerson() should return false for shortened date formats
+     */
     @Test
     public void testAddPerson_BirthdateTooShort() {
 
@@ -84,7 +112,7 @@ public class PersonManagerTest {
                 "UNIT",
                 "TEST",
                 "80|Swanston Street|Melbourne|Victoria|Australia",
-                "2-4-99"
+                "2-4-99" // Invalid: too short, should be DD-MM-YYYY
         );
 
         boolean result = manager.addPerson(invalidBirthdate);
@@ -92,6 +120,12 @@ public class PersonManagerTest {
         assertFalse(result);
     }
 
+    /*
+     Test Case: Birthdate Validation - Format Requirements | Verify the function with a birthdate in an incorrect for-mat
+     - Validates that birthdates must use hyphen separators (DD-MM-YYYY).
+     - Slash separators (DD/MM/YYYY) are not accepted to ensure format consistency.
+     - Expected: addPerson() should return false for dates with wrong separators
+     */
     @Test
     public void testAddPerson_BirthdateWrongFormat() {
 
@@ -102,7 +136,7 @@ public class PersonManagerTest {
                 "UNIT",
                 "TEST",
                 "80|Swanston Street|Melbourne|Victoria|Australia",
-                "02/04/1999"
+                "02/04/1999" // Invalid: uses slashes instead of hyphens
         );
 
         boolean result = manager.addPerson(invalidBirthdate);
@@ -110,6 +144,12 @@ public class PersonManagerTest {
         assertFalse(result);
     }
 
+    /*
+     Test Case: Birthdate Validation - Date Existence Check | Verify the function with a birthdate that is not existent
+     - Ensures that only valid calendar dates are accepted.
+     - Tests rejection of impossible dates (month 13, day 00, etc.).
+     - Expected: addPerson() should return false for non-existent dates
+     */
     @Test
     public void testAddPerson_BirthdateNotExistent() {
 
@@ -120,7 +160,7 @@ public class PersonManagerTest {
                 "UNIT",
                 "TEST",
                 "80|Swanston Street|Melbourne|Victoria|Australia",
-                "00-13-1000"
+                "00-13-1000" // Invalid: impossible date (day 00, month 13)
         );
 
         boolean result = manager.addPerson(invalidBirthdate);
