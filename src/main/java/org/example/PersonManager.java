@@ -23,13 +23,14 @@ public class PersonManager {
         return personList;
     }
 
+    // constructor that takes a file as a parameter
     public PersonManager(String filename) {
         this.filename = filename;
         List<Person> loadedList = FileHandler.loadFromFile(filename);
         this.personList = (loadedList != null) ? loadedList : new ArrayList<>();
     }
 
-    // a method to add a Person, validate the imputm and write to a file if everything is correct
+    // a method to add a Person, validate the input and write to a file if everything is correct
     public boolean addPerson(Person person) {
         if (person == null) return false;
 
@@ -61,56 +62,6 @@ public class PersonManager {
 
         return true;
     }
-
-//    public boolean addPerson(Person person) {
-//        if (person == null) {
-//            System.out.println("Person is null.");
-//            return false;
-//        }
-//
-//        if (!DataValidator.checkID(person.getPersonID())) {
-//            System.out.println("Invalid ID.");
-//            return false;
-//        }
-//
-//        if (!DataValidator.checkFirstName(person.getFirstName())) {
-//            System.out.println("Invalid first name.");
-//            return false;
-//        }
-//
-//        if (!DataValidator.checkLastName(person.getLastName())) {
-//            System.out.println("Invalid last name.");
-//            return false;
-//        }
-//
-//        if (!DataValidator.checkAddress(person.getAddress())) {
-//            System.out.println("Invalid address.");
-//            return false;
-//        }
-//
-//        if (!DataValidator.checkBirthdate(person.getBirthdate())) {
-//            System.out.println("Invalid birthdate.");
-//            return false;
-//        }
-//
-//        if (containsPerson(person.getPersonID())) {
-//            System.out.println("ID already exists");
-//            return false;
-//        }
-//
-//        try {
-//            FileHandler.appendPersonToFile(person, filename);
-//            System.out.println("Writing to file: " + filename);
-//            System.out.println("Appending person to file: " + person);
-//            personList.add(person);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//
-//        return true;
-//    }
-
 
     // lambda to check if the person is in the List
     private boolean containsPerson(String personID) {
@@ -221,7 +172,6 @@ public class PersonManager {
             System.out.println("License suspended.");
         }
 
-
         // appending to file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEMERIT_FILE, true))) {
             writer.write(id + "," + dateOfOffense + "," + points);
@@ -241,7 +191,6 @@ public class PersonManager {
         return "Success";
     }
 
-
     private int getDemeritPointsInTwoYears(String id, LocalDate offenseDate) {
             int total = 0;
             try (BufferedReader reader = new BufferedReader(new FileReader(DEMERIT_FILE))) {
@@ -260,21 +209,19 @@ public class PersonManager {
                     if (!recordedDate.isBefore(offenseDate.minusYears(2)) && !recordedDate.isAfter(offenseDate)) {
                         total += pointVal;
                     }
-
                 }
             } catch (IOException | NumberFormatException | DateTimeParseException e) {
-                // handle quietly, or log if needed
+                e.printStackTrace();
             }
             return total;
         }
 
-        private Person findPersonById(String id) {
-            for (Person p : personList) {
-                if (p.getPersonID().equals(id)) return p;
-            }
-            return null;
+    private Person findPersonById(String id) {
+        for (Person p : personList) {
+            if (p.getPersonID().equals(id)) return p;
         }
-
+        return null;
+    }
 
         // removing a person (use for cleaning the file)
     public boolean removePerson(String personID) {
@@ -295,9 +242,6 @@ public class PersonManager {
             e.printStackTrace();
             return false;
         }
-
         return true;
     }
 }
-
-

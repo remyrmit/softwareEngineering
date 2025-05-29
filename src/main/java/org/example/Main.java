@@ -17,15 +17,15 @@ public class Main {
 //                "02-04-1999"
 //        );
 //
-//
 //        pm.addPerson(person);
-
 
         //for deleting the tests i ran
 //        PersonManager manager2 = new PersonManager("people.txt");
 //        manager2.removePerson("78s_d%&fAB");
 
 
+        // adding a scanner to read user input, using the file with records of people
+        // displaying a menu and using a switch-case to go to a function that a user chooses
         Scanner scanner = new Scanner(System.in);
         PersonManager pm = new PersonManager("people.txt");
 
@@ -58,6 +58,7 @@ public class Main {
         }
     }
 
+    // asking for all the necessary info to add a person
     private static void addPersonFromInput(Scanner scanner, PersonManager pm) {
 
         System.out.print("Enter Person ID: ");
@@ -85,6 +86,7 @@ public class Main {
         }
     }
 
+    // asking for all the necessary info to update a person
     private static void updatePersonFromInput(Scanner scanner, PersonManager pm) {
 
         System.out.print("Enter existing Person ID: ");
@@ -120,6 +122,7 @@ public class Main {
         }
     }
 
+    // asking for all the necessary info to demerit points
     private static void addDemeritPointsFromInput(Scanner scanner, PersonManager pm) {
         System.out.print("Enter Person ID: ");
         String id = scanner.nextLine();
@@ -144,9 +147,3 @@ public class Main {
         }
     }
 }
-
-
-
-
-
-

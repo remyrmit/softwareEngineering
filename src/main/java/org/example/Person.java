@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class Person {
 
+    // class attributes
     private String personID;
     private String firstName;
     private String lastName;
@@ -72,10 +73,6 @@ public class Person {
         return demeritPoints;
     }
 
-//    public void setDemeritPoints(HashMap<Date, Integer> demeritPoints) {
-//        this.demeritPoints = demeritPoints;
-//    }
-
     public boolean isSuspended() {
         return isSuspended;
     }
@@ -83,11 +80,6 @@ public class Person {
     public void setSuspended(boolean suspended) {
         isSuspended = suspended;
     }
-
-
-//    public void addDemeritPoint(Date date, int points) {
-//        demeritPoints.put(date, points);
-//    }
 
     @Override
     public String toString() {

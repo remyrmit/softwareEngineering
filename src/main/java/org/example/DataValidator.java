@@ -1,4 +1,4 @@
-// this class is  responsible for checking if all the data meets the assigment criteria
+// this class is responsible for checking if all the entered data meets the assigment criteria
 
 package org.example;
 
@@ -146,5 +146,4 @@ public class DataValidator {
     public static boolean checkLastName(String lastName) {
         return lastName != null && lastName.matches("[A-Z][a-zA-Z]*([-\\s][A-Z][a-zA-Z]*)?");
     }
-
 }
