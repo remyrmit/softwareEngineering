@@ -32,7 +32,6 @@ public class PersonManagerTest {
         assertFalse(result);
     }
 
-
     /*
      Test Case: ID Validation - Must Contain Special Characters | Verify the func-tion with an ID without any special charac-ters 
      - Verifies that person IDs without special characters are rejected.
@@ -201,7 +200,7 @@ public class PersonManagerTest {
         PersonManager manager = new PersonManager("people.txt");
 
         // Update name only, keep same address for person under 18
-        boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tommy", "Hanks",
+        boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Thomas", "Hanks",
                 "80|Swanston Street|Melbourne|Victoria|Australia", "11-11-2011"); // Same address
 
         assertTrue(result);
@@ -256,7 +255,7 @@ public class PersonManagerTest {
         PersonManager manager = new PersonManager("people.txt");
 
         // Allow ID change for person with ID starting with odd number 5
-        boolean result = manager.updatePersonalDetails("56ab$%eXYZ", "56rm$%eXYZ", "UNIT", "TEST",
+        boolean result = manager.updatePersonalDetails("56rm$%eXYZ", "56am$%eXYZ", "UNIT", "TEST",
                 "55|Flinders ln|Melbourne|Victoria|Australia", "02-04-2015");
 
         assertTrue(result);
@@ -313,7 +312,7 @@ public class PersonManagerTest {
         PersonManager manager = new PersonManager("people.txt");
 
         // 20-year-old, only 4 points, should not be suspended
-        String result = manager.addDemeritPoints("56rm$%eXYZ", "01-04-2024", 4);
+        String result = manager.addDemeritPoints("22ab$%eXYZ", "01-04-2024", 4);
 
         assertEquals("Success", result);
     }
@@ -331,7 +330,7 @@ public class PersonManagerTest {
         PersonManager manager = new PersonManager("people.txt");
 
         // we have already added 4 point in the test above -- now the total will be 7
-        String result = manager.addDemeritPoints("56rm$%eXYZ", "01-05-2025", 3);
+        String result = manager.addDemeritPoints("22ab$%eXYZ", "01-05-2025", 3);
 
         assertEquals("Success", result);
 
@@ -350,8 +349,8 @@ public class PersonManagerTest {
 
         PersonManager manager = new PersonManager("people.txt");
 
-        //previously added points
-        String result = manager.addDemeritPoints("65ab$%eXYZ", "01-05-2025", 1);
+        // previously added points
+        String result = manager.addDemeritPoints("434ABC##XY", "01-05-2025", 6);
 
         assertEquals("Success", result);
 
