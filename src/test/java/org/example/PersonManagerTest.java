@@ -182,7 +182,7 @@ public class PersonManagerTest {
         
         // Attempt to change address for person born in 2011 (under 18)
         boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tommy", "Hanks",
-                "85|Flinders Ln|Melbourne|Victoria|Australia", "05-05-2011"); // Different address
+                "85|Flinders Ln|Melbourne|Victoria|Australia", "09-09-2011"); // Different address
 
         assertFalse(result);
     }
@@ -200,8 +200,8 @@ public class PersonManagerTest {
         PersonManager manager = new PersonManager("people.txt");
 
         // Update name only, keep same address for person under 18
-        boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Thomas", "Hanks",
-                "80|Swanston Street|Melbourne|Victoria|Australia", "05-05-2011"); // Same address
+        boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tommy", "Hanks",
+                "80|Swanston Street|Melbourne|Victoria|Australia", "09-09-2011"); // Same address
 
         assertTrue(result);
     }
@@ -219,7 +219,7 @@ public class PersonManagerTest {
 
         // Update birthdate for person under 18
         boolean result = manager.updatePersonalDetails("65ab$%eXYZ", "65ab$%eXYZ", "Tommy", "Hanks",
-                "80|Swanston Street|Melbourne|Victoria|Australia", "09-09-2011"); // Different birthdate
+                "80|Swanston Street|Melbourne|Victoria|Australia", "05-05-2011"); // Different birthdate
 
         assertTrue(result);
     }
@@ -255,7 +255,7 @@ public class PersonManagerTest {
         PersonManager manager = new PersonManager("people.txt");
 
         // Allow ID change for person with ID starting with odd number 5
-        boolean result = manager.updatePersonalDetails("56am$%eXYZ", "56rm$%eXYZ", "UNIT", "TEST",
+        boolean result = manager.updatePersonalDetails("56rm$%eXYZ", "56am$%eXYZ", "UNIT", "TEST",
                 "55|Flinders ln|Melbourne|Victoria|Australia", "02-04-2015");
 
         assertTrue(result);
