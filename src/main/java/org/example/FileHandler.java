@@ -1,3 +1,5 @@
+// this class handles the files: loading, appending and overwriting
+
 package org.example;
 
 import java.io.*;
@@ -6,7 +8,7 @@ import java.util.List;
 
 public class FileHandler {
 
-    // loading data from file // creating a new file if one doesn't exist
+    // loading data from file and creating a new file if one doesn't exist
     public static List<Person> loadFromFile(String filename) {
         List<Person> people = new ArrayList<>();
         File file = new File(filename);

@@ -1,3 +1,5 @@
+// this class loads the menu options and takes user input
+
 package org.example;
 
 import java.io.IOException;

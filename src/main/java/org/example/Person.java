@@ -69,14 +69,6 @@ public class Person {
         this.birthdate = birthdate;
     }
 
-    public HashMap<Date, Integer> getDemeritPoints() {
-        return demeritPoints;
-    }
-
-    public boolean isSuspended() {
-        return isSuspended;
-    }
-
     public void setSuspended(boolean suspended) {
         isSuspended = suspended;
     }

@@ -18,11 +18,6 @@ public class PersonManager {
 
     private String filename;
 
-    // getter for person list
-    public List<Person> getPersonList() {
-        return personList;
-    }
-
     // constructor that takes a file as a parameter
     public PersonManager(String filename) {
         this.filename = filename;
@@ -87,19 +82,19 @@ public class PersonManager {
                 boolean addressChanged = !newAddress.equals(currentAddress);
                 boolean birthdayChanged = !newBirthdate.equals(currentBirthdate);
 
-                // If birthday changed, no other fields can be changed
+                // if birthday changed, no other fields can be changed
                 if (birthdayChanged && (idChanged || nameChanged || addressChanged)) {
                     System.out.println("You can only update your birthdate.");
                     return false;
                 }
 
-                // If person is under 18, address can't be changed
+                // if person is under 18, address can't be changed
                 if (DataValidator.isUnder18(currentBirthdate) && addressChanged) {
                     System.out.println("\nAddress cannot be changed due to being under 18.");
                     return false;
                 }
 
-                // If ID starts with even number, ID can't be changed
+                // if ID starts with even number, ID can't be changed
                 char firstChar = currentID.charAt(0);
                 if (Character.isDigit(firstChar) && (firstChar - '0') % 2 == 0 && idChanged) {
                     System.out.println("You cannot update your ID.");
@@ -136,11 +131,12 @@ public class PersonManager {
     private static final String DEMERIT_FILE = "demerits.txt";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
+    // adding demerit points
     public String addDemeritPoints(String id, String dateOfOffense, int points) {
         Person person = findPersonById(id);
         if (person == null) return "Failed";
 
-        // validate date
+        // validating date - must be before current date
         LocalDate offenseDate;
         try {
             offenseDate = LocalDate.parse(dateOfOffense, FORMATTER);
@@ -152,7 +148,7 @@ public class PersonManager {
             return "Failed";
         }
 
-        // validate points
+        // validating points - must be between 1 and 6
         if (points < 1 || points > 6) {
             System.out.println("Points must be between 1 and 6.");
             return "Failed";
@@ -191,6 +187,7 @@ public class PersonManager {
         return "Success";
     }
 
+    // checking demerit points within 2 years
     private int getDemeritPointsInTwoYears(String id, LocalDate offenseDate) {
             int total = 0;
             try (BufferedReader reader = new BufferedReader(new FileReader(DEMERIT_FILE))) {
@@ -216,6 +213,7 @@ public class PersonManager {
             return total;
         }
 
+    // method fo find a person using their ID
     private Person findPersonById(String id) {
         for (Person p : personList) {
             if (p.getPersonID().equals(id)) return p;
@@ -223,7 +221,7 @@ public class PersonManager {
         return null;
     }
 
-        // removing a person (use for cleaning the file)
+    // removing a person (use for cleaning the file)
     public boolean removePerson(String personID) {
         Person toRemove = null;
         for (Person p : personList) {

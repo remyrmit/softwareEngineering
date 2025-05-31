@@ -13,11 +13,13 @@ public class DataValidator {
 
         System.out.println("Checking ID: " + personID);
 
+        // checking if the entered ID is 0 or more than 10 characters
         if (personID == null || personID.length() != 10) {
             System.out.println("Incorrect ID length.");
             return false;
         }
 
+        // checking the first 2 characters - must be a digit between 2 and 9
         char first = personID.charAt(0);
         char second = personID.charAt(1);
         if (!Character.isDigit(first) || !Character.isDigit(second)) {
@@ -29,6 +31,7 @@ public class DataValidator {
             return false;
         }
 
+        // checking for special characters - must be exactly 2
         int specialCharCount = 0;
         for (int i = 2; i <= 7; i++) {
             char ch = personID.charAt(i);
@@ -42,6 +45,7 @@ public class DataValidator {
             return false;
         }
 
+        // checking the last 2 characters - must be uppercase letters
         char last1 = personID.charAt(8);
         char last2 = personID.charAt(9);
         if (!Character.isUpperCase(last1) || !Character.isUpperCase(last2)) {
@@ -58,6 +62,7 @@ public class DataValidator {
             return false;
         }
 
+        // checking if it's the correct format - must be seperated by "|"
         String[] parts = address.split("\\|");
         if (parts.length != 5) {
             System.out.println("Incorrect address format.");
@@ -74,6 +79,7 @@ public class DataValidator {
             return false;
         }
 
+        // checking the state - must be Victoria
         if (!state.equals("Victoria")) {
             System.out.println("Incorrect state.");
             return false;
@@ -89,6 +95,7 @@ public class DataValidator {
             return false;
         }
 
+        // checking the format - mist be seperated by "-"
         String[] parts = birthdate.split("-");
         if (parts.length != 3) {
             System.out.println("Incorrect date format.");
@@ -99,6 +106,7 @@ public class DataValidator {
         String monthStr = parts[1];
         String yearStr = parts[2];
 
+        // must be in a dd/mm/yyyy format
         if (!dayStr.matches("\\d{2}") || !monthStr.matches("\\d{2}") || !yearStr.matches("\\d{4}")) {
             System.out.println("Incorrect date format.");
             return false;
@@ -108,8 +116,9 @@ public class DataValidator {
         int month = Integer.parseInt(monthStr);
         int year = Integer.parseInt(yearStr);
 
+        // must have existing day, month and year and be in the last 95 years
         if (month < 1 || month > 12 || day < 1 || day > 31) {
-            System.out.println("Incorrect day/month/year");
+            System.out.println("Incorrect day/month.");
             return false;
         }
 
